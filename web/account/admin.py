@@ -10,6 +10,7 @@ from django.utils.translation import (
 from .models import (
     User,
     Email,
+    Phone,
     Gender,
     Race,
     Ethnicity,
@@ -27,6 +28,18 @@ class EmailInline(admin.TabularInline):
     classes = ("emails-inline")
     model = Email
     form = EmailForm
+
+
+class PhoneForm(forms.ModelForm):
+    class Meta:
+        model = Phone
+        exclude = []
+
+
+class PhoneInline(admin.TabularInline):
+    classes = ['phone_inline']
+    model = Phone
+    form = PhoneForm
 
 
 class UserRaceEthnicityForm(forms.ModelForm):
@@ -63,6 +76,7 @@ class UserAdmin(BaseUserAdmin):
 
     inlines = [
         EmailInline,
+        PhoneInline,
         UserRaceEthnicityInline,
     ]
 

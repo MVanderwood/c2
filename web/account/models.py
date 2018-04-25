@@ -85,7 +85,7 @@ class Email(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="contact_emails",
+        related_name='contact_emails',
     )
 
     address = models.EmailField()
@@ -105,30 +105,33 @@ class Email(models.Model):
         return self.address
 
 
-# class Phone(models.Model):
-#     """Model for simple Phone storage"""
+class Phone(models.Model):
+    """Model for simple Phone storage"""
 
-#     user = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#     )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='contact_phones'
+    )
 
-#     number = models.CharField
+    number = models.CharField(
+        max_length=50,
+        blank=True,
+    )
 
-#     description = models.CharField(
-#         max_length=255,
-#         blank=True,
-#     )
+    active = models.BooleanField(
+        default=True,
+    )
 
-#     class Meta:
-#         """Meta definition for Phone."""
+    class Meta:
+        """Meta definition for Phone."""
 
-#         verbose_name = 'Phone'
-#         verbose_name_plural = 'Phones'
+        verbose_name = 'Phone'
+        verbose_name_plural = 'Phones'
 
-#     def __str__(self):
-#         """Unicode representation of Phone."""
-#         return self.number
+    def __str__(self):
+        """Unicode representation of Phone."""
+        return self.number
 
 
 class Gender(models.Model):
