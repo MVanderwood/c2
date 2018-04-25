@@ -79,6 +79,58 @@ class User(AbstractUser):
     age.short_description = 'Age'
 
 
+class Email(models.Model):
+    """Model for simple email storage"""
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="contact_emails",
+    )
+
+    address = models.EmailField()
+
+    active = models.BooleanField(
+        default=True,
+    )
+
+    class Meta:
+        """Meta definition for Email."""
+
+        verbose_name = 'Email'
+        verbose_name_plural = 'Emails'
+
+    def __str__(self):
+        """Unicode representation of Email."""
+        return self.address
+
+
+# class Phone(models.Model):
+#     """Model for simple Phone storage"""
+
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#     )
+
+#     number = models.CharField
+
+#     description = models.CharField(
+#         max_length=255,
+#         blank=True,
+#     )
+
+#     class Meta:
+#         """Meta definition for Phone."""
+
+#         verbose_name = 'Phone'
+#         verbose_name_plural = 'Phones'
+
+#     def __str__(self):
+#         """Unicode representation of Phone."""
+#         return self.number
+
+
 class Gender(models.Model):
     """Model definition for Gender."""
 

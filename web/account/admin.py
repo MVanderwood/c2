@@ -9,11 +9,24 @@ from django.utils.translation import (
 )
 from .models import (
     User,
+    Email,
     Gender,
     Race,
     Ethnicity,
     UserRaceEthnicity,
 )
+
+
+class EmailForm(forms.ModelForm):
+    class Meta:
+        model = Email
+        exclude = ['user']
+
+
+class EmailInline(admin.TabularInline):
+    classes = ("emails-inline")
+    model = Email
+    form = EmailForm
 
 
 class UserRaceEthnicityForm(forms.ModelForm):
@@ -49,6 +62,7 @@ class UserAdmin(BaseUserAdmin):
     )
 
     inlines = [
+        EmailInline,
         UserRaceEthnicityInline,
     ]
 
@@ -108,6 +122,24 @@ class UserAdmin(BaseUserAdmin):
                 )
             }
         ),
+    )
+
+
+@admin.register(Email)
+class EmailAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'address',
+        'active',
+    )
+
+    search_fields = (
+        'address',
+        'active',
+    )
+
+    fieldsets = (
+
     )
 
 
