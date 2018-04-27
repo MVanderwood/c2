@@ -152,8 +152,18 @@ class EmailAdmin(admin.ModelAdmin):
         'active',
     )
 
-    fieldsets = (
 
+@admin.register(Phone)
+class PhoneAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'number',
+        'active',
+    )
+
+    search_fields = (
+        'number',
+        'active',
     )
 
 

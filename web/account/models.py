@@ -8,6 +8,8 @@ from django.utils import timezone
 
 from location.models import Location
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 class UserManager(DefaultUserManager):
     def create_user(self, email=None, password=None, **extra_fields):
@@ -97,8 +99,8 @@ class Email(models.Model):
     class Meta:
         """Meta definition for Email."""
 
-        verbose_name = 'Email'
-        verbose_name_plural = 'Emails'
+        verbose_name = 'Email Address'
+        verbose_name_plural = 'Email Addresses'
 
     def __str__(self):
         """Unicode representation of Email."""
@@ -111,12 +113,11 @@ class Phone(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='contact_phones'
+        related_name='contact_phones',
     )
 
-    number = models.CharField(
-        max_length=50,
-        blank=True,
+    number = PhoneNumberField(
+        help_text="Please use the following format: <em>+1 XXX-XXX-XXXX</em>",
     )
 
     active = models.BooleanField(
@@ -126,12 +127,12 @@ class Phone(models.Model):
     class Meta:
         """Meta definition for Phone."""
 
-        verbose_name = 'Phone'
-        verbose_name_plural = 'Phones'
+        verbose_name = 'Phone Number'
+        verbose_name_plural = 'Phone Numbers'
 
     def __str__(self):
         """Unicode representation of Phone."""
-        return self.number
+        return f"{self.number}"
 
 
 class Gender(models.Model):
@@ -163,7 +164,7 @@ class Gender(models.Model):
 
     def __str__(self):
         """Unicode representation of Gender."""
-        return self.gender
+        return f"{self.gender}"
 
 
 class Race(models.Model):
@@ -180,7 +181,7 @@ class Race(models.Model):
 
     def __str__(self):
         """Unicode representation of Race."""
-        return self.race
+        return f"{self.race}"
 
 
 class Ethnicity(models.Model):
